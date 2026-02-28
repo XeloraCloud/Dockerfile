@@ -1,10 +1,17 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
-RUN apt update && \
-    apt install -y tmate openssh-client curl && \
-    apt clean
+USER root
+ENV DEBIAN_FRONTEND=noninteractive
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN apt-get update && apt-get install -y \
+    curl wget sudo ttyd qemu-system-x86 qemu-kvm \
+    && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT ["/entrypoint.sh"]
+RUN useradd -m -u 1000 user && echo "user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+USER user
+WORKDIR /home/user
+
+COPY --chown=user:user start.sh /home/user/start.sh
+RUN chmod +x /home/user/start.sh
+
+ENTRYPOINT ["/home/user/start.sh"]
