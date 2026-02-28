@@ -4,16 +4,21 @@ echo "===== Container Starting ====="
 
 SOCKET="/tmp/tmate.sock"
 
-tmate -S $SOCKET new-session -d
+echo "Starting tmate in debug mode..."
 
-sleep 15
+tmate -vv -S $SOCKET new-session -d 2>&1
 
-echo "===== Tmate SSH ====="
-tmate -S $SOCKET display -p '#{tmate_ssh}'
+sleep 10
 
-echo "===== Tmate WEB ====="
-tmate -S $SOCKET display -p '#{tmate_web}'
+echo "===== Session List ====="
+tmate -S $SOCKET list-sessions 2>&1
 
-echo "===== Container Ready ====="
+echo "===== Ready Status ====="
+tmate -S $SOCKET display -p '#{tmate_ready}' 2>&1
+
+echo "===== SSH String ====="
+tmate -S $SOCKET display -p '#{tmate_ssh}' 2>&1
+
+echo "===== Done ====="
 
 tail -f /dev/null
