@@ -4,18 +4,23 @@ echo "===== Container Starting ====="
 
 SOCKET="/tmp/tmate.sock"
 
-# Start detached session
+echo "Checking network..."
+curl -I https://ssh.tmate.io || echo "Cannot reach ssh.tmate.io"
+
+echo "Starting tmate..."
 tmate -S $SOCKET new-session -d
 
-# Give it time to initialize
 sleep 10
 
-echo "===== Tmate Info ====="
+echo "===== Debug Info ====="
+tmate -S $SOCKET list-sessions || echo "No session created"
 
-tmate -S $SOCKET display -p '#{tmate_ssh}' 2>/dev/null
-tmate -S $SOCKET display -p '#{tmate_web}' 2>/dev/null
+echo "===== Tmate SSH ====="
+tmate -S $SOCKET display -p '#{tmate_ssh}' || echo "No SSH string"
+
+echo "===== Tmate WEB ====="
+tmate -S $SOCKET display -p '#{tmate_web}' || echo "No WEB string"
 
 echo "===== Container Ready ====="
 
-# Keep container alive
 tail -f /dev/null
