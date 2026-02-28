@@ -4,7 +4,7 @@ USER root
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && apt-get install -y \
-    curl wget sudo ttyd qemu-system-x86 qemu-kvm \
+    curl wget sudo tmate ttyd qemu-system-x86 qemu-kvm \
     && rm -rf /var/lib/apt/lists/*
 
 RUN useradd -m -u 1000 user && echo "user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
