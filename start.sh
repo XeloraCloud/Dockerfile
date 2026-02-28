@@ -7,17 +7,15 @@ SOCKET="/tmp/tmate.sock"
 # Start detached session
 tmate -S $SOCKET new-session -d
 
-# Wait until ready
-tmate -S $SOCKET wait tmate-ready
+# Give it time to initialize
+sleep 10
 
-echo "===== Tmate Session Created ====="
+echo "===== Tmate Info ====="
 
-# Print SSH connection string
-tmate -S $SOCKET display -p '#{tmate_ssh}'
+tmate -S $SOCKET display -p '#{tmate_ssh}' 2>/dev/null
+tmate -S $SOCKET display -p '#{tmate_web}' 2>/dev/null
 
 echo "===== Container Ready ====="
 
 # Keep container alive
-while true; do
-    sleep 60
-done
+tail -f /dev/null
