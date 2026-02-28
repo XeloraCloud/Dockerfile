@@ -1,11 +1,17 @@
 FROM ubuntu:22.04
 
+ENV container docker
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && apt install -y \
     systemd systemd-sysv \
-    curl wget sudo bash ca-certificates qemu-system-x86 qemu-kvm \
+    curl wget sudo bash ca-certificates \
+    qemu-system-x86 qemu-kvm \
     && rm -rf /var/lib/apt/lists/*
+
+VOLUME ["/sys/fs/cgroup"]
+
+STOPSIGNAL SIGRTMIN+3
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
