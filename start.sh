@@ -2,13 +2,20 @@
 
 echo "===== Container Starting ====="
 
-tmate &
+SOCKET="/tmp/tmate.sock"
 
-sleep 5
+# Start detached session
+tmate -S $SOCKET new-session -d
 
-tmate show-messages
+# Wait until ready
+tmate -S $SOCKET wait tmate-ready
 
-echo "Container Ready..."
+echo "===== Tmate Session Created ====="
+
+# Print SSH connection string
+tmate -S $SOCKET display -p '#{tmate_ssh}'
+
+echo "===== Container Ready ====="
 
 # Keep container alive
 while true; do
