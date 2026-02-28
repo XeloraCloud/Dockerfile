@@ -1,6 +1,11 @@
 #!/bin/bash
 
-tmate -F &
+echo "===== Container Starting ====="
 
-# Keep-alive trick for Railway
-while true; do echo "💀 Alive..."; sleep 60; done
+# Show system info
+echo "User: $(whoami)"
+echo "Kernel: $(uname -r)"
+
+# Start tmate session
+echo "Starting tmate session..."
+tmate -F
