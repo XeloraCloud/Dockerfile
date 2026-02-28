@@ -2,10 +2,15 @@
 
 echo "===== Container Starting ====="
 
-# Show system info
-echo "User: $(whoami)"
-echo "Kernel: $(uname -r)"
+tmate &
 
-# Start tmate session
-echo "Starting tmate session..."
-tmate -F
+sleep 5
+
+tmate show-messages
+
+echo "Container Ready..."
+
+# Keep container alive
+while true; do
+    sleep 60
+done
