@@ -2,10 +2,15 @@
 
 echo "===== Container Starting ====="
 
-PORT=${PORT:-8080}
+# Install sshx
+curl -sSf https://sshx.io/get | sh
 
-echo "Starting ttyd on port $PORT"
+echo "===== Starting sshx Session ====="
 
-ttyd -p $PORT -W bash
+# Start interactive sshx session
+sshx
 
-echo "===== Container Ready ====="
+echo "===== Session Started ====="
+
+# Keep container alive
+tail -f /dev/null
