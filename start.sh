@@ -1,7 +1,5 @@
 #!/bin/bash
 
-exec /sbin/init
-
 echo "===== Container Starting ====="
 
 # Install sshx
