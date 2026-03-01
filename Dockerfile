@@ -9,4 +9,7 @@ RUN apt-get update && apt-get install -y \
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
+# Create data dir
+RUN mkdir -p /data && chmod 777 /data
+
 CMD ["/start.sh"]
